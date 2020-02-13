@@ -28,12 +28,60 @@
           <p>Dashboard</p>
         </a>
       </li>
-			<li class="nav-item {{ is_active('teams') }}">
-				<a class="nav-link" href="{{ route('teams.index') }}">
-					<i class="fa fa-users text-info"></i>
-					<p>Teams</p>
-				</a>
-			</li>
+      <li class="nav-item {{ is_active('branch') }}">
+        <a class="nav-link" href="{{ route('admin.branch.index') }}">
+          <i class="far fa-code-branch"></i>
+          <p>Branches</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('admins') }}">
+        <a class="nav-link" href="{{ route('admin.admins.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Admins</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('customers') }}">
+        <a class="nav-link" href="{{ route('admin.customers.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Customers</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('appointments') }}">
+        <a class="nav-link" href="{{ route('admin.appointments.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Appointments</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('reviews') }}">
+        <a class="nav-link" href="{{ route('admin.reviews.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Reviews</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('staffs') }}">
+        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Staffs</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('services') }}">
+        <a class="nav-link" href="{{ route('admin.services.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Services</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('payments') }}">
+        <a class="nav-link" href="{{ route('admin.payments.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Payments</p>
+        </a>
+      </li>
+      <li class="nav-item {{ is_active('promocodes') }}">
+        <a class="nav-link" href="{{ route('admin.promocodes.index') }}">
+          <i class="fa fa-users text-info"></i>
+          <p>Promo Codes</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

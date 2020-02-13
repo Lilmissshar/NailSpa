@@ -13,13 +13,13 @@
     </div>
     <div class="collapse navbar-collapse justify-content-end" id="navbar">
       <ul class="navbar-nav">
-        @if( admin_register_open() )
+        <!--  admin_register_open() --> 
         <li class="nav-item ">
 	        <a href="{{ route('admin.register.show') }}" class="nav-link">
 	          <i class="nc-icon nc-badge"></i> Register
 	        </a>
         </li>
-        @endif
+        
         <li class="nav-item">
           <a href="{{ route('admin.login.show') }}" class="nav-link">
 						<i class="nc-icon nc-mobile"></i> Login

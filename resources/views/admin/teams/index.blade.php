@@ -5,13 +5,13 @@
 	<div class="card bootstrap-table">
     <div class="card-body table-full-width">
       <div class="toolbar">
-        <a href="{{ route('teams.create') }}" class="ml-1">
+        <a href="{{ route('admin.teams.create') }}" class="ml-1">
           <button class="btn btn-outline" style="border-radius: 30px">
             <i class="glyphicon fa fa-plus"></i>
           </button>
         </a>
       </div>
-      <table id="bootstrap-table" class="table" data-url="{{ route('teams.index') }}">
+      <table id="bootstrap-table" class="table" data-url="{{ route('admin.teams.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
           <th data-field="name">Name</th>

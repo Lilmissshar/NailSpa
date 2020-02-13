@@ -21,7 +21,14 @@ class AuthController extends Controller{
 	    "password" => "required|confirmed"
 	  ]);
 
-	  $user = User::create($request->all());
+	  $user = User::create([
+	  	'name' => $request->name,
+	  	'email' => $request->email,
+	  	'password' => $request->password,
+	  	'role' => 1
+	  ]);
+	  
+	  $request->all();
 	  $user->role = 1;
 	  $user->save();
 	  Auth::login($user);

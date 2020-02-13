@@ -1,5 +1,5 @@
 @extends('layouts.client.master')
 
 @section('content')
-	Comming Soon
+	Coming Soon!
 @endsection

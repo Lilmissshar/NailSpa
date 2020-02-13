@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="card-body">
-        {!! Form::open(['route' => 'teams.store', 'class' => 'form', 'id' => 'form-validation']) !!}
+        {!! Form::open(['route' => 'admin.teams.store', 'class' => 'form', 'id' => 'form-validation']) !!}
         <div class="form-group has-label">
           <label>Name
             <star class="star">*</star>

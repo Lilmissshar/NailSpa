@@ -11,6 +11,7 @@
 
 	  <!-- Styles -->
 	  <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
+	  <script src="https://kit.fontawesome.com/2faf17344d.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
 
