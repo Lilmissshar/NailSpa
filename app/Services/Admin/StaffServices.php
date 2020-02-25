@@ -2,8 +2,7 @@
 namespace App\Services\Admin;
 
 use App\Staff;
-use App\Service;
-use App\StaffService;
+use App\ServiceStaff;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
 
@@ -24,46 +23,71 @@ class StaffServices extends TransformerService{
 	    return respond(['rows' => $this->transformCollection($staffs), 'total' => $listCount]);
 	}
 
+	public function store(Request $request){
+		$data = $request->validate([
+	      'name' => 'required',
+	      'age' => 'required',
+	      'email' => 'required',
+	      'mobile' => 'required',
+	      'description' => 'required'
+		]);
+
+		$staff = new Staff();
+		$staff->name = $request->name;
+		$staff->age = $request->age;
+    $staff->email = $request->email;
+    $staff->mobile = $request->mobile;
+    $staff->description = $request->description;
+		$staff->save();
+
+	    foreach($request->service_id as $id){
+	      $serviceStaff = new ServiceStaff();
+	      $serviceStaff->staff_id = $staff->id;
+	      $serviceStaff->service_id = $id;
+	      $serviceStaff->save();
+    	}
+
+		return redirect()->route('admin.staffs.index');
+	}
+
 	public function update(Request $request, Staff $staff) {
 	    $data = $request->validate([
 	      'name' => 'required',
 	      'age' => 'required',
 	      'email' => 'required',
-	      'phone' => 'required',
-	      'description' => 'required',
-	      'branch_id' => 'required'
+	      'mobile' => 'required',
+	      'description' => 'required'
 	      
 	    ]);
 
 	    $staff->name = $data['name']; //the variable museum is what the user wrote? 
 	    $staff->age = $data['age'];
 	    $staff->email = $data['email'];
-	    $staff->phone = $data['phone'];
+	    $staff->mobile = $data['mobile'];
 	    $staff->description = $data['description'];
-	    $staff->branch_id = $data['branch_id'];
 	    $staff->save();
 
 	    foreach($request->service_id as $id){
-      		$staffService = new StaffService();
-      		$staffService->staff_id = $staff->id;
-      		$staffService->service_id = $id;
-      		$staffService->save();
+      		$serviceStaff = new ServiceStaff();
+      		$serviceStaff->staff_id = $staff->id;
+      		$serviceStaff->service_id = $id;
+      		$serviceStaff->save();
     	}
-    	// dd($request->service_ids)
-    	$staff->service()->sync([]);
-    	$staff->service()->sync($request->service_id);
+    	
+    	$staff->services()->sync([]);
+    	$staff->services()->sync($request->service_id);
 
 	    return redirect()->route('admin.staffs.index'); 
 	}
 
 	public function transformService($services) { //services is from $staff->service at transform, parameter can be diff name
-		$types = [];
+		$names = [];
 
 		foreach ($services as $service) {
-			array_push($types, $service->type);//push all the service.type into the types array
+			array_push($names, $service->name);//push all the service.type into the types array
 		}
 
-		return implode(', ', $types);
+		return implode(', ', $names);
 	}
 
 	public function transform($staff){
@@ -72,10 +96,9 @@ class StaffServices extends TransformerService{
 			'name' => $staff->name,
 			'age' => $staff->age,
 			'email' => $staff->email,
-			'phone' => $staff->phone,
+			'mobile' => $staff->mobile,
 			'description' => $staff->description,
-			'branch_id' => $staff->branch_id,
-			'services' => $this->transformService($staff->service) //use the relationship
+			'services' => $this->transformService($staff->services) //use the relationship
 		];
 	}
 }

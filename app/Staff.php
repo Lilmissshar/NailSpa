@@ -4,27 +4,26 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Model
-{
-    protected $fillable = [
-      'name',
-      'age',
-      'email',
-      'phone',
-      'description',
-      'branch_id',
-      'commission'
-  ];
+class Staff extends Model {
+  protected $table = 'staffs';
 
-  public function branch() {
-  	return $this->belongsTo('App\Branch');
+  protected $fillable = [
+    'name',
+    'description',
+    'age',
+    'email',
+    'mobile'
+  ];  
+
+  // public function tableCall() {
+  //   return
+  // }
+
+  public function services() {
+  	return $this->belongsToMany('App\Service', 'service_staffs', 'staff_id', 'service_id')->withTimestamps();
   }
 
-  public function service() {
-  	return $this->belongsToMany('App\Service', 'staff_services', 'staff_id', 'service_id')->withTimestamps();
-  }
-
-  public function unavailable_times() {
-    return $this->belongsToMany('App\UnavailableTimes');
+  public function leaves() {
+    return $this->hasMany('App\Leave');
   }
 }

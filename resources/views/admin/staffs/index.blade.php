@@ -17,9 +17,8 @@
           <th data-field="name">Name</th>
           <th data-field="age">Age</th>
           <th data-field="email">Email</th>
-          <th data-field="phone">Phone</th>
+          <th data-field="mobile">Mobile</th>
           <th data-field="description">Desciption</th>
-          <th data-field="branch_id">Branch ID</th>
           <th data-field="services">Services</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>

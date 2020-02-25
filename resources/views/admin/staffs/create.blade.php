@@ -31,22 +31,16 @@
           {{ Form::text('email', null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
-          <label>Phone
+          <label>Mobile
             <star class="star">*</star>
           </label>
-          {{ Form::text('phone', null, ['class' => 'form-control', 'required']) }}
+          {{ Form::text('mobile', null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>Description
             <star class="star">*</star>
           </label>
           {{ Form::textarea('description', null, ['class' => 'form-control', 'required']) }}
-        </div>
-        <div class="form-group has-label">
-          <label>Branch ID
-            <star class="star">*</star>
-          </label>
-          {{ Form::text('branch_id', null, ['class' => 'form-control', 'required']) }}
         </div>
         <staffservice-component></staffservice-component>
         <div class="card-category form-category">

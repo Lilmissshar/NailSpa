@@ -14985,6 +14985,29 @@ a.text-dark:focus {
   }
 }
 
+.booking-content {
+  margin: 60px 0;
+}
+
+.booking-content #date-booking {
+  max-width: 300px;
+}
+
+.booking-content #date-booking input {
+  margin: 0px !important;
+}
+
+.booking-content .submit-btn {
+  background-color: #00B7EB;
+  color: white;
+  border: none;
+  padding: 10px 50px;
+}
+
+.customer-details {
+  margin: 60px;
+}
+
 /*!
  * Datepicker for Bootstrap v1.9.0 (https://github.com/uxsolutions/bootstrap-datepicker)
  *

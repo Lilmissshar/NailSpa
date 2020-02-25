@@ -14,8 +14,8 @@
       <table id="bootstrap-table" class="table" data-url="{{ route('admin.reviews.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
-          <th data-field="user_id">User ID</th>
-          <th data-field="review">Review</th>
+          <th data-field="appointment_id">Appointment ID</th>
+          <th data-field="description">Description</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
       </table>

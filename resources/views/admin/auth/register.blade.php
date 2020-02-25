@@ -21,6 +21,12 @@
             <input class="form-control" name="name" type="text" required="true" />
           </div>
           <div class="form-group has-label">
+            <label>Mobile
+              <star class="star">*</star>
+            </label>
+            <input class="form-control" name="mobile" type="text" required="true" />
+          </div>
+          <div class="form-group has-label">
             <label>Password
               <star class="star">*</star>
             </label>

@@ -4,22 +4,13 @@
 @section('content')
 	<div class="card bootstrap-table">
     <div class="card-body table-full-width">
-      <div class="toolbar">
-        <a href="{{ route('admin.customers.create') }}" class="ml-1">
-          <button class="btn btn-outline" style="border-radius: 30px">
-            <i class="glyphicon fa fa-plus"></i>
-          </button>
-        </a>
-      </div>
       <table id="bootstrap-table" class="table" data-url="{{ route('admin.customers.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
           <th data-field="name">Name</th>
           <th data-field="email">Email</th>
-          <th data-field="phone">Phone</th>
-          <th data-field="address">Address</th>
-          <th data-field="role">Role</th>
-          <th data-field="is_guest">Guest</th>
+          <th data-field="mobile">Mobile</th>
+          <th data-field="is_active">Is_Active</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
       </table>

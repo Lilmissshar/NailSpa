@@ -16,8 +16,8 @@
           <table style="width:100%">
             @foreach($services as $service)
             <tr>
-              <th>Service Type</th>
-              <td>{{$service->type}}</td>
+              <th>Service Name</th>
+              <td>{{$service->name}}</td>
             </tr>
             <tr>
               <th>Description</th>
@@ -25,7 +25,7 @@
             </tr>
             <tr>
               <th></th>
-              <td><a href="{{ route('staffs.index', ['service'=>$service->id, 'branch'=>$branch->id]) }}">Choose</a></td>
+              <td><a href="{{ route('staffs.index', ['service' => $service->id]) }}">Choose</a></td>
             </tr>
             @endforeach
           </table>

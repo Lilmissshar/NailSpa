@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\CustomerServices;
@@ -16,11 +16,6 @@ class CustomersController extends Controller{
 		$this->customerServices = $customerServices;
 	}
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
   public function index(Request $request){
 		if ($request->isJson()) {
 			return $this->customerServices->all($request);
@@ -28,72 +23,15 @@ class CustomersController extends Controller{
 		return view($this->path . 'index');
   }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function create(){
-		return view($this->path . 'create');
+  public function edit(Customer $customer){
+    return view($this->path . 'edit', ['customer' => $customer]);
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function store(Request $request){
-		$this->validate($request, [
-			"name" => "required",
-      "email" => "required",
-      "phone" => "required",
-      "address" => "required",
-      "is_guest" => "required",
-		]);
-
-		$customer = new User();
-		$customer->name = $request->name;
-		$customer->email = $request->email;
-    $customer->phone = $request->phone;
-    $customer->address = $request->address;
-    $customer->is_guest = $request->is_guest;
-    $customer->password = "secret";
-    $customer->role = 0;
-		$customer->save();
-
-		return redirect()->route('admin.customers.index');
-  }
-
-   public function edit(User $customer){
-    return view($this->path . 'edit', ['customer' => $customer]); //'branch' -> variable from the blade, $branch -> define what the variable is the name that is being transferred
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Museum  $museum
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $customer) {
+  public function update(Request $request, Customer $customer) {
     return $this->customerServices->update($request, $customer);
-    }
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Museum  $museum
-     * @return \Illuminate\Http\Response
-     */
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\User  $teamMember
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy(User $customer){
+  public function destroy(Customer $customer){
     $customer->delete();
 
 		return success();

@@ -13,16 +13,16 @@
       <div class="card-body">
         {!! Form::open(['route' => 'admin.reviews.store', 'class' => 'form', 'id' => 'form-validation']) !!}
         <div class="form-group has-label">
-          <label>User ID
+          <label>Appointment ID
             <star class="star">*</star>
           </label>
-          {{ Form::text('user_id', null, [ 'class'=>'form-control', 'required']) }}
+          {{ Form::text('appointment_id', null, [ 'class'=>'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
-          <label>Review
+          <label>Description
             <star class="star">*</star>
           </label>
-          {{ Form::textarea('review', null, ['class' => 'form-control', 'required']) }}
+          {{ Form::textarea('description', null, ['class' => 'form-control', 'required']) }}
         </div>
 
         <div class="card-category form-category">

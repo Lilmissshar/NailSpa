@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="blue" data-image="{{ asset('images/sidebar_bg.jpg') }}">
+<div class="sidebar" data-image="{{ asset('images/sidebar_1.jpg') }}">
 
   <div class="logo">
 		<a href="{{ route('dashboard') }}" class="simple-text logo-mini">
@@ -13,7 +13,7 @@
     <div class="user">
 			<div class="info">
       <div class="photo">
-        <img src="{{ avatar_picture_url(current_user()->avatar) }}" >
+        {{--<img src="{{ avatar_picture_url(current_user()->avatar) }}" >--}}
       </div>
 			<a data-toggle="collapse" href="#collapseExample" class="collapsed">
 				<span>{{ str_limit(current_user()->name, 20) }}</span>
@@ -28,16 +28,10 @@
           <p>Dashboard</p>
         </a>
       </li>
-      <li class="nav-item {{ is_active('branch') }}">
-        <a class="nav-link" href="{{ route('admin.branch.index') }}">
-          <i class="far fa-code-branch"></i>
-          <p>Branches</p>
-        </a>
-      </li>
-      <li class="nav-item {{ is_active('admins') }}">
-        <a class="nav-link" href="{{ route('admin.admins.index') }}">
+      <li class="nav-item {{ is_active('appointments') }}">
+        <a class="nav-link" href="{{ route('admin.appointments.index') }}">
           <i class="fa fa-users text-info"></i>
-          <p>Admins</p>
+          <p>Appointments</p>
         </a>
       </li>
       <li class="nav-item {{ is_active('customers') }}">
@@ -46,10 +40,10 @@
           <p>Customers</p>
         </a>
       </li>
-      <li class="nav-item {{ is_active('appointments') }}">
-        <a class="nav-link" href="{{ route('admin.appointments.index') }}">
+      <li class="nav-item {{ is_active('leaves') }}">
+        <a class="nav-link" href="{{ route('admin.leaves.index') }}">
           <i class="fa fa-users text-info"></i>
-          <p>Appointments</p>
+          <p>Leaves</p>
         </a>
       </li>
       <li class="nav-item {{ is_active('reviews') }}">
@@ -58,28 +52,16 @@
           <p>Reviews</p>
         </a>
       </li>
-      <li class="nav-item {{ is_active('staffs') }}">
-        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
-          <i class="fa fa-users text-info"></i>
-          <p>Staffs</p>
-        </a>
-      </li>
       <li class="nav-item {{ is_active('services') }}">
         <a class="nav-link" href="{{ route('admin.services.index') }}">
           <i class="fa fa-users text-info"></i>
           <p>Services</p>
         </a>
       </li>
-      <li class="nav-item {{ is_active('payments') }}">
-        <a class="nav-link" href="{{ route('admin.payments.index') }}">
+      <li class="nav-item {{ is_active('staffs') }}">
+        <a class="nav-link" href="{{ route('admin.staffs.index') }}">
           <i class="fa fa-users text-info"></i>
-          <p>Payments</p>
-        </a>
-      </li>
-      <li class="nav-item {{ is_active('promocodes') }}">
-        <a class="nav-link" href="{{ route('admin.promocodes.index') }}">
-          <i class="fa fa-users text-info"></i>
-          <p>Promo Codes</p>
+          <p>Staffs</p>
         </a>
       </li>
     </ul>
