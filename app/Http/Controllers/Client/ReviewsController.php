@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Review;
+use App\Appointment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Client\ReviewServices;
@@ -16,12 +17,12 @@ class ReviewsController extends Controller{
 		$this->reviewServices = $reviewServices;
 	}
 	
-  public function index(){
-  	return view($this->path . 'index');
+  public function index(Appointment $appointment){
+  	return view($this->path . 'index', ['appointment' => $appointment]);
   }
 
-  public function store(Request $request){
-  	return $this->reviewServices->store($request);
+  public function store(Request $request, Appointment $appointment){
+  	return $this->reviewServices->store($request, $appointment);
   }
 }
 

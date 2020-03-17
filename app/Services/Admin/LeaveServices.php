@@ -39,20 +39,30 @@ class LeaveServices extends TransformerService{
 	}
 
 	public function update(Request $request, Leave $leave) {
-	    $data = $request->validate([
-	      'staff_id' => "required",
-	      'reason' => "required",
-	      'start_date' => "required",
-	      'end_date' => "required"
+	  $data = $request->validate([
+	      'status' => "required"
 		]);
 
-		$leave->staff_id = $data['staff_id'];
-		$leave->reason = $data['reason'];
-		$leave->start_date = $data['start_date'];
-		$leave->end_date = $data['end_date'];
+		$leave->status = $data['status'];
 		$leave->save();
 
-	    return redirect()->route('admin.leaves.index'); 
+	  return redirect()->route('admin.leaves.index'); 
+	}
+
+	public function status($leave){
+		switch($leave->status){
+			case "1": 
+			return "Accepted";
+			break;
+
+			case "2":
+			return "Rejected";
+			break;
+			
+			case "3":
+			return "Pending";
+			break;
+		}
 	}
 
 	public function transform($leave){
@@ -61,7 +71,9 @@ class LeaveServices extends TransformerService{
 			'staff_id' => $leave->staff->name,
 			'reason' => $leave->reason,
 			'start_date' => $leave->start_date,
-			'end_date' => $leave->end_date
+			'end_date' => $leave->end_date,
+			'slip' => $leave->slip,
+			'status' => $this->status($leave)
 		];
 	}
 }

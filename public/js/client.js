@@ -66373,102 +66373,88 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['propService', 'propStaff', 'propAppointments'], //fixed
-    data: function data() {
-        return {
-            date: null,
-            service: null,
-            staff: null,
-            appointments: null,
-            timeslots: [{ time: '09:00:00', disable: false }, { time: '10:00:00', disable: false }, { time: '11:00:00', disable: false }, { time: '12:00:00', disable: false }, { time: '13:00:00', disable: false }, { time: '14:00:00', disable: false }, { time: '15:00:00', disable: false }, { time: '16:00:00', disable: false }, { time: '17:00:00', disable: false }, { time: '18:00:00', disable: false }, { time: '19:00:00', disable: false }, { time: '20:00:00', disable: false }],
-            picked: null
-        };
+  props: ['propService', 'propStaff', 'propAppointments'], //fixed
+  data: function data() {
+    return {
+      date: null,
+      service: null,
+      staff: null,
+      appointments: null,
+      timeslots: [{ time: '09:00:00', disable: false }, { time: '10:00:00', disable: false }, { time: '11:00:00', disable: false }, { time: '12:00:00', disable: false }, { time: '13:00:00', disable: false }, { time: '14:00:00', disable: false }, { time: '15:00:00', disable: false }, { time: '16:00:00', disable: false }, { time: '17:00:00', disable: false }, { time: '18:00:00', disable: false }, { time: '19:00:00', disable: false }, { time: '20:00:00', disable: false }],
+      picked: null
+    };
+  },
+  mounted: function mounted() {
+    this.service = JSON.parse(this.propService);
+    this.staff = JSON.parse(this.propStaff);
+    this.appointments = JSON.parse(this.propAppointments);
+    //JSON.parse (changes from string to object). because we cannot use the string and manipulate it
+    var self = this;
+    //use self as this because we are using jQuery. jQuery has their own definition of this. 
+
+    $('.datepicker').on('changeDate', function () {
+      self.date = $('.datepicker').val();
+      self.dateChange();
+    });
+    //used on mounted because every time it is refreshed, it will be initialized
+    //the datepicker value in the second line, is when the date is picked (aka changeDate is provoked), the new date is stored into self.date
+    //the last line is calling the function dateChange()
+    //the second line is putting the new date into the date variable on the top.
+  },
+
+  methods: {
+    resetTime: function resetTime() {
+      var self = this;
+
+      _.forEach(this.timeslots, function (timeslot, key) {
+        self.timeslots[key].disable = false;
+      });
     },
-    mounted: function mounted() {
-        this.service = JSON.parse(this.propService);
-        this.staff = JSON.parse(this.propStaff);
-        this.appointments = JSON.parse(this.propAppointments);
-        //JSON.parse (changes from string to object). because we cannot use the string and manipulate it
-        var self = this;
-        //use self as this because we are using jQuery. jQuery has their own definition of this. 
+    dateChange: function dateChange() {
+      var _this = this;
 
-        $('.datepicker').on('changeDate', function () {
-            self.date = $('.datepicker').val();
-            self.dateChange();
-        });
-        //used on mounted because every time it is refreshed, it will be initialized
-        //the datepicker value in the second line, is when the date is picked (aka changeDate is provoked), the new date is stored into self.date
-        //the last line is calling the function dateChange()
-        //the second line is putting the new date into the date variable on the top.
+      axios.get('/services/' + this.service.id + '/staffs/' + this.staff.id + '/appointments?date=' + this.date).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.appointments = data;
+        _this.loadAppointments();
+      }, function (error) {
+        console.log(error);
+      });
     },
+    loadAppointments: function loadAppointments() {
+      var _this2 = this;
 
-    methods: {
-        resetTime: function resetTime() {
-            var self = this;
+      if (!this.appointments.length) {
+        this.resetTime();
+        return;
+      }
 
-            _.forEach(this.timeslots, function (timeslot, key) {
-                self.timeslots[key].disable = false;
-            });
-        },
-        dateChange: function dateChange() {
-            var _this = this;
+      var self = this;
 
-            axios.get('/services/' + this.service.id + '/staffs/' + this.staff.id + '/appointments?date=' + this.date).then(function (_ref) {
-                var data = _ref.data;
+      this.appointments.forEach(function (appointment) {
+        _this2.timeslots.filter(function (timeslot, index) {
+          if (appointment.time == timeslot.time) {
+            self.timeslots[index].disable = true;
+            return true;
+          }
+        }); //it will throw all of the results(the similar timeslots and appointment.time) into result
+      });
+    },
+    chosenTime: function chosenTime(index) {
+      this.picked = this.timeslots[index].time;
+      console.log(this.picked);
+      axios.get('/services/' + this.service.id + '/staffs/' + this.staff.id + '/appointments/details?time=' + this.picked + '&date=' + this.date).then(function (_ref2) {
+        var data = _ref2.data;
 
-                _this.appointments = data;
-                _this.loadAppointments();
-            }, function (error) {
-                console.log(error);
-            });
-        },
-        loadAppointments: function loadAppointments() {
-            var _this2 = this;
-
-            if (!this.appointments.length) {
-                this.resetTime();
-                return;
-            }
-
-            var self = this;
-
-            this.appointments.forEach(function (appointment) {
-                _this2.timeslots.filter(function (timeslot, index) {
-                    if (appointment.time == timeslot.time) {
-                        self.timeslots[index].disable = true;
-                        return true;
-                    }
-                }); //it will throw all of the results(the similar timeslots and appointment.time) into result
-            });
-        },
-        chosenTime: function chosenTime(index) {
-            if (this.timeslots[index].disable) {
-                this.timeslots[index].disable = false;
-                return;
-            }
-
-            if (this.picked == null) {
-                this.timeslots[index].disable = true;
-                this.picked = this.timeslots[index].time;
-                console.log(this.picked);
-            } else {
-                this.timeslots[index].disable = false;
-            }
-        },
-        send: function send() {
-            axios.get('/services/' + this.service.id + '/staffs/' + this.staff.id + '/appointments/details?time=' + this.picked + '&date=' + this.date).then(function (_ref2) {
-                var data = _ref2.data;
-
-                window.location.href = data;
-            }, function (error) {
-                window.location.href = error.response.data;
-            });
-        }
+        window.location.href = data;
+      }, function (error) {
+        window.location.href = error.response.data;
+      });
     }
+  }
 });
 
 /***/ }),
@@ -66504,48 +66490,33 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("label", [_vm._v("Time")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "list-group" }, [
-      _c(
-        "div",
-        { staticClass: "time-slots row" },
-        _vm._l(_vm.timeslots, function(timeslot, index) {
-          return _c("div", { staticClass: "col-4" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button", disabled: timeslot.disable },
-                on: {
-                  click: function($event) {
-                    return _vm.chosenTime(index)
-                  }
-                }
-              },
-              [_vm._v(_vm._s(timeslot.time))]
-            )
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _vm.picked != null
-      ? _c(
-          "button",
-          {
-            staticClass: "submit-btn",
-            on: {
-              click: function($event) {
-                return _vm.send()
-              }
-            }
-          },
-          [_vm._v("Submit")]
-        )
+    _vm.date != null
+      ? _c("div", { staticClass: "list-group" }, [
+          _c("label", [_vm._v("Time")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "time-slots row" },
+            _vm._l(_vm.timeslots, function(timeslot, index) {
+              return _c("div", { staticClass: "col-4" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", disabled: timeslot.disable },
+                    on: {
+                      click: function($event) {
+                        return _vm.chosenTime(index)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(timeslot.time))]
+                )
+              ])
+            }),
+            0
+          )
+        ])
       : _vm._e()
   ])
 }

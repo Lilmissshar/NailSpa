@@ -5,6 +5,7 @@ use App\Staff;
 use App\ServiceStaff;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
+use Illuminate\Support\Facades\Hash;
 
 class StaffServices extends TransformerService{
 
@@ -27,7 +28,7 @@ class StaffServices extends TransformerService{
 		$data = $request->validate([
 	      'name' => 'required',
 	      'age' => 'required',
-	      'email' => 'required',
+	      'email' => 'required|unique:staffs',
 	      'mobile' => 'required',
 	      'description' => 'required'
 		]);
@@ -38,14 +39,15 @@ class StaffServices extends TransformerService{
     $staff->email = $request->email;
     $staff->mobile = $request->mobile;
     $staff->description = $request->description;
+    $staff->password = Hash::make('secret');
 		$staff->save();
 
-	    foreach($request->service_id as $id){
-	      $serviceStaff = new ServiceStaff();
-	      $serviceStaff->staff_id = $staff->id;
-	      $serviceStaff->service_id = $id;
-	      $serviceStaff->save();
-    	}
+    foreach($request->service_id as $id){
+      $serviceStaff = new ServiceStaff();
+      $serviceStaff->staff_id = $staff->id;
+      $serviceStaff->service_id = $id;
+      $serviceStaff->save();
+  	}
 
 		return redirect()->route('admin.staffs.index');
 	}
@@ -68,10 +70,10 @@ class StaffServices extends TransformerService{
 	    $staff->save();
 
 	    foreach($request->service_id as $id){
-      		$serviceStaff = new ServiceStaff();
-      		$serviceStaff->staff_id = $staff->id;
-      		$serviceStaff->service_id = $id;
-      		$serviceStaff->save();
+    		$serviceStaff = new ServiceStaff();
+    		$serviceStaff->staff_id = $staff->id;
+    		$serviceStaff->service_id = $id;
+    		$serviceStaff->save();
     	}
     	
     	$staff->services()->sync([]);

@@ -20,26 +20,39 @@
                 <label>Staff ID
                   <label class="star">*</label>
                 </label>
-                {{ Form::select('staff_id', $staffs, null, [ 'class' => 'form-control', 'required']) }}
+                {{ Form::select('staff_id', $staffs, null, [ 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Reason
                   <label class="star">*</label>
                 </label>
-                {{ Form::select('reason', array('MC' => 'Medical Certificate', 'AL' => 'Applied Leave', 'EL' => 'Emergency Leave'), null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::select('reason', array('MC' => 'Medical Certificate', 'AL' => 'Applied Leave', 'EL' => 'Emergency Leave'), null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Start Date
                   <label class="star">*</label>
                 </label>
-                {{ Form::date('start_date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::date('start_date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>End Date
                   <label class="star">*</label>
                 </label>
-                {{ Form::date('end_date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::date('end_date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
+              <div class="form-group has-label">
+                <label>Status
+                  <label class="star">*</label>
+                </label>
+                {{ Form::select('status', array('1' => 'Accepted', '2' => 'Rejected', '3' => 'Pending'), null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+              </div>
+
+              @if($leave->slip)
+              <a href="{{ $url }}" target="_blank" class="btn btn-primary">View Slip</a>
+              @else
+              {{ "No slip found" }}
+              @endif
+
               <div class="card-footer ml-auto mr-auto mt-3 text-right">
                 <button type="submit" class="btn btn-warning btn-wd">Save Edit</button>
               </div>
@@ -51,3 +64,4 @@
   </div>
 </div>
 @endsection
+

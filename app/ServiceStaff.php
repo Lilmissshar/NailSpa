@@ -18,4 +18,8 @@ class ServiceStaff extends Model
   public function service() {
   	return $this->belongsTo('App\Service');
   }
+
+  public function appointments() {
+    return $this->hasMany('App\Appointment');
+  }
 }

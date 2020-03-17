@@ -58,5 +58,17 @@ class AppointmentsController extends Controller{
   public function submitSignIn(Request $request, Service $service, Staff $staff){
     return $this->appointmentServices->storeSignIn($request, $service, $staff);
   }
+
+  public function showAppointments(){
+    return $this->appointmentServices->showAppointments();
+  }
+
+  public function edit(Appointment $appointment){
+    return view($this->path . 'edit', ['appointment' => $appointment]);
+  }
+
+  public function update(Request $request, Appointment $appointment){
+    return $this->appointmentServices->update($request, $appointment);
+  }
 }
 

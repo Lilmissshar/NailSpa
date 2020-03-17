@@ -18,6 +18,7 @@
           <th data-field="reason">Reason</th>
           <th data-field="start_date">Start Date</th>
           <th data-field="end_date">End Date</th>
+          <th data-field="status">Status</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
       </table>
@@ -28,10 +29,7 @@
 @section('scripts')
   <script type="text/javascript">
     function operateFormatter(value, row, index) {
-      return [
-				'<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
-        '<i class="fa fa-remove"></i>',
-        '</a>', 
+      return [ 
         '<a rel="tooltip" title="Edit" class="btn btn-link btn-danger table-action edit" href="javascript:void(0)">',
         '<i class="fa fa-edit"></i>',
         '</a>'

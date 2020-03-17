@@ -18,8 +18,10 @@ class CreateStaffsTable extends Migration
             $table->string('name');
             $table->mediumText('description');
             $table->integer('age');
-            $table->string('email')->unique();
             $table->string('mobile');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

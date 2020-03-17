@@ -10,7 +10,9 @@ class Leave extends Model
       'staff_id',
       'reason',
       'start_date',
-      'end_date'
+      'end_date', 
+      'status',
+      'slip'
   ];
 
   public function staff() {

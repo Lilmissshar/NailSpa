@@ -57,15 +57,19 @@ class Handler extends ExceptionHandler
             
             if ($request->is('admin') || $request->is('admin/*')) {
                 return response(route('admin.login.show'), 401);
+            } elseif ($request->is('staff') || $request->is('staff/*')) {
+                return response(route('staff.login.show'), 401);
+            } else {
+                return response(route('client.login.show'), 401);
             }
-
-            return response(route('client.login.show'), 401);
         }
 
         if ($request->is('admin') || $request->is('admin/*')) {
             return redirect()->route('admin.login.show');
+        } elseif ($request->is('staff') || $request->is('staff/*')) {
+            return redirect()->route('staff.login.show');
+        } else {
+            return redirect()->route('home');
         }
-
-        // return redirect()->route('home');
     }
 }

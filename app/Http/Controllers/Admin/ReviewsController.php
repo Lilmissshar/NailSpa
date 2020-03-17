@@ -22,26 +22,4 @@ class ReviewsController extends Controller{
 		}
 		return view($this->path . 'index');
   }
-
-  public function create(){
-		return view($this->path . 'create');
-  }
-
-  public function store(Request $request){
-    return $this->reviewServices->store($request);
-  }
-
-  public function edit(Review $review){
-    return view($this->path . 'edit', ['review' => $review]);
-  }
-
-  public function update(Request $request, Review $review) {
-    return $this->reviewServices->update($request, $review);
-  }
-
-  public function destroy(Review $review){
-    $review->delete();
-
-		return success();
-  }
 }

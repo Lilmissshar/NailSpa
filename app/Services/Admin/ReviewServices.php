@@ -24,37 +24,14 @@ class ReviewServices extends TransformerService{
 	    return respond(['rows' => $this->transformCollection($reviews), 'total' => $listCount]);
 	}
 
-	public function update(Request $request, Review $review) {
-	    $data = $request->validate([
-	      'appointment_id' => 'required',
-	      'description' => 'required'
-	    ]);
-
-	    $review->appointment_id = $data['appointment_id'];
-	    $review->description = $data['description'];
-	    $review->save();
-
-	    return redirect()->route('admin.reviews.index'); 
-  }
-
-    public function store(Request $request){
-    	$data = $request->validate([
-	      'appointment_id' => 'required',
-	      'description' => 'required'
-	    ]);
-
-		$review = new Review();
-		$review->appointment_id = $request->appointment_id;
-		$review->description = $request->description;
-		$review->save();
-
-		return redirect()->route('admin.reviews.index');
-    }
-
 	public function transform($review){
 		return [
 			'id' => $review->id,
 			'appointment_id' => $review->appointment_id,
+			'customer_name' => $review->appointment->customer->name,
+			'customer_email' => $review->appointment->customer->email,
+			'service' => $review->appointment->service_staff->service->name,
+			'staff' => $review->appointment->service_staff->staff->name,
 			'description' => $review->description
 		];
 	}

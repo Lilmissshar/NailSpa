@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     protected $fillable = [
-      'staff_id',
+      'service_staff_id',
       'customer_id',
       'duration',
       'status',
@@ -15,16 +15,16 @@ class Appointment extends Model
       'time'
   ];
 
-  public function staff() {
-    return $this->belongsTo('App\Staff');
+  public function service_staff() {
+    return $this->belongsTo('App\ServiceStaff');
   }
 
   public function customer() {
     return $this->belongsTo('App\Customer');
   }
 
-  public function reviews() {
-    return $this->hasMany('App\Review');
+  public function review() {
+    return $this->hasOne('App\Review');
   }
 
 }

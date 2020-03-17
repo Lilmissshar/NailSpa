@@ -5,16 +5,14 @@
     	<p>Date:</p>
         <input type="text" class="datepicker" style= "margin:30px" v-on:change="change()">
     </div>
-	<label>Time</label>
-	<div class="list-group">
+	<div class="list-group" v-if="date != null">
+    <label>Time</label>
     	<div class="time-slots row">
     		<div class="col-4" v-for="(timeslot, index) in timeslots">
     			<button type="button" class="btn btn-primary" v-on:click="chosenTime(index)" :disabled="timeslot.disable">{{timeslot.time}}</button>
     		</div>
     	</div>	
 	</div>
-  <br>
-	<button class="submit-btn" v-on:click="send()" v-if="picked != null">Submit</button>
 </div>
 </template>
 
@@ -96,27 +94,15 @@
     		});
     	},
     	chosenTime: function(index) {
-            if (this.timeslots[index].disable) {
-                this.timeslots[index].disable = false;
-                return;
-            }
-
-            if (this.picked == null) {
-                this.timeslots[index].disable = true;
-                this.picked = this.timeslots[index].time;
-                console.log(this.picked);
-            } else {
-                this.timeslots[index].disable = false;
-            }
-        },
-    	send: function() {
-    		axios.get(`/services/${this.service.id}/staffs/${this.staff.id}/appointments/details?time=${this.picked}&date=${this.date}`)
-    		.then(({ data }) => {
-    			window.location.href = data;
-    		}, (error) => {
+            this.picked = this.timeslots[index].time;
+            console.log(this.picked);
+            axios.get(`/services/${this.service.id}/staffs/${this.staff.id}/appointments/details?time=${this.picked}&date=${this.date}`)
+            .then(({ data }) => {
+                window.location.href = data;
+            }, (error) => {
           window.location.href = error.response.data;
         });
-    	},
+        },
     }
 }
 </script>

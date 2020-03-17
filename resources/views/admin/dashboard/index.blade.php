@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
 
 @section('content')
-	Comming Soon
+	Coming Soon!!
 @endsection

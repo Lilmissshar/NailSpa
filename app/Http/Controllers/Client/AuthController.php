@@ -16,12 +16,12 @@ class AuthController extends Controller{
 
 	public function register(Request $request){
 		$this->validate($request, [
-      "email" => "required|email|unique:customers",
-      "name" => "required",
-      "mobile" => "required",
-      "password" => "required|min:6|required_with:password_confirmation|same:password_confirmation",
-      "password_confirmation" => "min:6"
-    ]);
+	      "email" => "required|email|unique:customers",
+	      "name" => "required",
+	      "mobile" => "required",
+	      "password" => "required|min:6|required_with:password_confirmation|same:password_confirmation",
+	      "password_confirmation" => "min:6"
+	    ]);
 
 		$customer = Customer::create([
 			'name' => $request->name,
@@ -47,6 +47,7 @@ class AuthController extends Controller{
 		]);
 
 		if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password])) {
+			dd($request);
 			return redirect()->intended();
 	 	} else{
 	    return redirect()->back()->withErrors(['message' => 'Email or password is incorrect']);

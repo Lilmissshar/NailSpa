@@ -8,7 +8,7 @@
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
           <th data-field="time">Time</th>
           <th data-field="date">Date</th>
-          <th data-field="staff_id">Staff Name</th>
+          <th data-field="staff_name">Staff Name</th>
           <th data-field="customer_id">Customer Name</th>
           <th data-field="duration">Duration</th>
           <th data-field="status">Status</th>

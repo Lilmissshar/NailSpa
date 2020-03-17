@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Appointment;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\AppointmentServices;
@@ -24,7 +25,9 @@ class AppointmentsController extends Controller{
   }
 
   public function edit(Appointment $appointment){
-    return view($this->path . 'edit', ['appointment' => $appointment]); 
+    $serviceStaff = $appointment->service_staff->staff->pluck('name', 'id');
+    $customer = Customer::pluck('name', 'id');
+    return view($this->path . 'edit', ['appointment' => $appointment, 'serviceStaff' => $serviceStaff, 'customer' => $customer]); 
   }
 
   public function update(Request $request, Appointment $appointment) {

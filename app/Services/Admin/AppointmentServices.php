@@ -19,7 +19,7 @@ class AppointmentServices extends TransformerService{
 	    $listCount = $appointments->count();
 
 	    $appointments = $appointments->limit($limit)->offset($offset)->get();
-	   
+
 	    return respond(['rows' => $this->transformCollection($appointments), 'total' => $listCount]);
 	}
 
@@ -34,12 +34,36 @@ class AppointmentServices extends TransformerService{
 	    return redirect()->route('admin.appointments.index'); 
 	 }
 
-	 public function transformCustomer($customer) {
-	 	return $customer->name;
-	 }
+	public function status($appointment){
+		switch($appointment->status){
+			case "0":
+			return "Cancelled";
+			break;
 
-	 public function transformStaff($staff) {
-	 	return $staff->name;
+			case "1":
+			return "Ongoing";
+			break;
+
+			case "2":
+			return "Completed";
+			break;
+
+			case "3":
+			return "Accepted";
+			break;
+
+			case "4":
+			$appointment->service_staff->staff->name = null;
+			return "Rejected";
+			break;
+
+			case "5":
+			return "Pending";
+			break;
+			
+			default:
+			return "Pending";
+		}
 	}
 
 	public function transform($appointment){
@@ -48,9 +72,9 @@ class AppointmentServices extends TransformerService{
 			'time' => $appointment->time,
 			'date' => $appointment->date,
 			'duration' => $appointment->duration,
-			'status' =>$appointment->status,
-			'customer_id' => $this->transformCustomer($appointment->customer),
-			'staff_id' => $this->transformStaff($appointment->staff)
+			'status' =>$this->status($appointment),
+			'customer_id' => $appointment->customer->name,
+			'staff_name' => $appointment->service_staff->staff->name
 		];
 	}
 }

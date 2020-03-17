@@ -3,24 +3,23 @@
 namespace App\Services\Client;
 
 use App\Review;
-use App\Appointnemnt;
+use App\Appointment;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
 
 class ReviewServices extends TransformerService{
 
-	public function store(Request $request){
+	public function store(Request $request, Appointment $appointment){
 		$data = $request->validate([
-			'appointment_id' => 'required',
 			'description' => 'required'
 		]);
 
 		$review = new Review();
-		$review->appointment_id = $request->appointment_id;
+		$review->appointment_id = $appointment->id;
 		$review->description = $request->description;
 		$review->save();
 
-		return redirect()->route('reviews.index');
+		return \App::call('App\Http\Controllers\Client\AppointmentsController@showAppointments');
 	}
 
 	public function transform($review){

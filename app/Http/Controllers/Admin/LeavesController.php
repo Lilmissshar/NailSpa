@@ -7,6 +7,7 @@ use App\Leave;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\LeaveServices;
+use Illuminate\Support\Facades\Storage;
 
 class LeavesController extends Controller{
 
@@ -35,7 +36,9 @@ class LeavesController extends Controller{
 
   public function edit(Leave $leave){
     $staffs = Staff::pluck('email', 'id');
-   return view($this->path . 'edit', ['leave' => $leave, 'staffs' => $staffs]); 
+    $slip = $leave->slip;
+    $url = Storage::url($slip);
+    return view($this->path . 'edit', ['leave' => $leave, 'staffs' => $staffs, 'url' => $url]); 
    }
 
   public function update(Request $request, Leave $leave) {

@@ -55,22 +55,20 @@ class ServiceServices extends TransformerService{
 	public function store(Request $request){
 		$data = $request->validate ([
 			"name" => "required",
-	        "description" => "required",
-	        "duration" => "required",
-	        "price" => "required"
-		  ]);
+      "description" => "required",
+      "duration" => "required",
+      "price" => "required"
+		]);
 
 		$service = new Service();
 		$service->name = $request->name;
 		$service->description = $request->description;
-    	$service->duration = $request->duration;
-    	$service->price = $request->price;
+  	$service->duration = $request->duration;
+  	$service->price = $request->price;
 		$service->save();
 		
 		return redirect()->route('admin.services.index');
 	}
-
-
 
 	public function transform($service){
 		return [

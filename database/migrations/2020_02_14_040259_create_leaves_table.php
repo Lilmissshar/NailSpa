@@ -19,6 +19,8 @@ class CreateLeavesTable extends Migration
             $table->string('reason');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('status');
+            $table->string('slip')->nullable();
             $table->timestamps();
         });
     }

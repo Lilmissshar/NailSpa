@@ -64,16 +64,15 @@ Route::get('/', 'Client\HomeController@home')->name('root');
 Route::get('/home', 'Client\HomeController@home')->name('home');
 
 Route::resource('services', 'Client\ServicesController');
-Route::resource('reviews', 'Client\ReviewsController');
 
 Route::get('services/{service}/staffs', 'Client\StaffsController@index')->name('staffs.index');
 Route::get('services/{service}/staffs/{staff}/appointments', 'Client\AppointmentsController@index')->name('appointments.index');
 
-//register
+//register(client)
 Route::get('register', "Client\AuthController@viewRegister")->name('client.register.show');
 Route::post('register', "Client\AuthController@register")->name('client.register');
 
-//login
+//login(client)
 Route::get('login','Client\AuthController@viewLogin')->name('client.login.show');
 Route::post('login','Client\AuthController@login')->name('client.login');
 
@@ -81,4 +80,42 @@ Route::middleware('auth')->group(function(){
   Route::get('services/{service}/staffs/{staff}/appointments/details', 'Client\AppointmentsController@show')->name('appointments.show');
   Route::post('services/{service}/staffs/{staff}/appointments', 'Client\AppointmentsController@submitForm')->name('appointments.store'); 
   Route::get('logout', 'Client\AuthController@logout')->name('client.logout');
+  Route::get('reviews/{appointment}', 'Client\ReviewsController@index')->name('reviews.index');
+  Route::post('reviews/{appointment}/store', 'Client\ReviewsController@store')->name('reviews.store');
+  Route::get('appointments', 'Client\AppointmentsController@showAppointments')->name('appointments.showAppointments');
+  Route::get('appointments/{appointment}/review', 'Client\AppointmentsController@edit')->name('appointments.edit');
+  Route::post('appointments/{appointment}/update', 'Client\AppointmentsController@update')->name('appointments.update');
 });
+
+//Staff Routes
+Route::prefix('staff')->group(function(){
+  Route::middleware('guest:staff')->group(function(){
+
+    Route::middleware('staff.register.access')->group(function(){
+      //Staff register
+      Route::get('register', 'Staff\AuthController@viewRegister')->name('staff.register.show');
+      Route::post('register', 'Staff\AuthController@register')->name('staff.register');
+    });
+    //Staff login
+    Route::get('login', 'Staff\AuthController@viewLogin')->name('staff.login.show');
+    Route::post('login', 'Staff\AuthController@login')->name('staff.login');
+  });
+
+  Route::middleware('auth:staff')->group(function(){
+    Route::get('/', 'Staff\DashboardController@dashboard');
+    Route::get('dashboard', 'Staff\DashboardController@dashboard')->name('staff.dashboard');
+    Route::get('logout', 'Staff\AuthController@logout')->name('staff.logout');
+    Route::get('settings', 'Staff\AccountSettingsController@viewAccount')->name('staff.account.show');
+    Route::post('settings', 'Staff\AccountSettingsController@updateAccount')->name('staff.account.update');
+    Route::put('setting/passord', 'Staff\AccountSettingsController@updatePassword')->name('staff.password.change');
+
+    Route::name('staff.')->group(function(){
+      Route::resource('appointments', 'Staff\AppointmentsController');
+      Route::resource('leaves', 'Staff\LeavesController', ['parameters' => [
+        'leaves' => 'leave']]);
+    });
+  });
+});
+
+
+
