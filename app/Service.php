@@ -7,19 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $fillable = [
-      'type',
+      'name',
       'description',
-      'time_taken',
-      'branch_id',
+      'duration',
       'price'
   ];
-
-  public function branch() {
-  	return $this->belongsTo('App\Branch');
-  }
   
-  public function staff() {
-  	return $this->belongsToMany('App\Staff', 'staff_services', 'staff_id', 'service_id')->withTimestamps();
+  public function staffs() {
+  	return $this->belongsToMany('App\Staff', 'service_staffs', 'service_id', 'staff_id')->withTimestamps();
   }
 
 }

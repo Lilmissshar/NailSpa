@@ -3,6 +3,7 @@
 namespace App\Http\Middleware\Admin;
 
 use Closure;
+use App\Admin;
 
 class RegisterAccess{
 
@@ -14,6 +15,12 @@ class RegisterAccess{
    * @return mixed
    */
   public function handle($request, Closure $next){
+    $admin = Admin::first();
+
+    if($admin) {
+      return redirect()->route('admin.login.show');
+    }
+
 		return $next($request);
   }
 }

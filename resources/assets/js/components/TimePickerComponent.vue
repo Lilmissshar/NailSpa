@@ -1,47 +1,48 @@
 <template>
-<div class="main">
-	<p>Date: <input type="text" class="datepicker" style= "margin:30px" v-on:change="change()"></p>
-	<label>Time</label>
-	<div class="list-group">
-	<ul class="time-slots">
-		<li v-for="(timeslot, index) in timeslots">
-			<button type="button" class="btn btn-primary" v-on:click="chosenTime(index)" :disabled="timeslot.disable" >{{timeslot.time}}</button>
-		</li>
-	</ul>	
+<div class="booking-content">
+    <h5>Select your date of booking.</h5>
+    <div id="date-booking" class="d-flex justify-content-between align-items-start">
+    	<p>Date:</p>
+        <input type="text" class="datepicker" style= "margin:30px" v-on:change="change()">
+    </div>
+	<div class="list-group" v-if="date != null">
+    <label>Time</label>
+    	<div class="time-slots row">
+    		<div class="col-4" v-for="(timeslot, index) in timeslots">
+    			<button type="button" class="btn btn-primary" v-on:click="chosenTime(index)" :disabled="timeslot.disable">{{timeslot.time}}</button>
+    		</div>
+    	</div>	
 	</div>
-	<button type="button" v-on:click="send()">Submit</button>
 </div>
 </template>
 
 <script>
   export default {
-  	props: ['propBranch', 'propService', 'propStaff', 'propAppointments'], //fixed
+  	props: ['propService', 'propStaff', 'propAppointments'], //fixed
     data: function(){
       return {
       	date: null,
-		branch: null,
 		service: null,
 		staff: null,
 		appointments: null,
 		timeslots: [
-			{ time: '0900', disable: false},
-			{ time: '1000', disable: false},
-			{ time: '1100', disable: false},
-			{ time: '1200', disable: false},
-			{ time: '1300', disable: false},
-			{ time: '1400', disable: false},
-			{ time: '1500', disable: false},
-			{ time: '1600', disable: false},
-			{ time: '1700', disable: false},
-			{ time: '1800', disable: false},
-			{ time: '1900', disable: false}
+			{ time: '09:00:00', disable: false},
+			{ time: '10:00:00', disable: false},
+			{ time: '11:00:00', disable: false},
+			{ time: '12:00:00', disable: false},
+			{ time: '13:00:00', disable: false},
+			{ time: '14:00:00', disable: false},
+			{ time: '15:00:00', disable: false},
+			{ time: '16:00:00', disable: false},
+			{ time: '17:00:00', disable: false},
+			{ time: '18:00:00', disable: false},
+			{ time: '19:00:00', disable: false},
+            { time: '20:00:00', disable: false}
 		],
-		picked: []
-		//we create new variables to alter it
+		picked: null
       };
     },
     mounted() {
-    	this.branch = JSON.parse(this.propBranch);
     	this.service = JSON.parse(this.propService);
     	this.staff = JSON.parse(this.propStaff);
     	this.appointments = JSON.parse(this.propAppointments);
@@ -59,18 +60,26 @@
 			//the second line is putting the new date into the date variable on the top.
     },
     methods: {
+        resetTime: function() {
+            let self = this;
+
+            _.forEach(this.timeslots, function(timeslot, key) {
+              self.timeslots[key].disable = false;
+            });
+        },
     	dateChange: function(){
-    		axios.get(`/branch/${this.branch.id}/services/${this.service.id}/staffs/${this.staff.id}/appointments?date=${this.date}`)
+    		axios.get(`/services/${this.service.id}/staffs/${this.staff.id}/appointments?date=${this.date}`)
 	    	.then(({ data }) => {
 	    		this.appointments = data;
-	    		this.loadAppoinments();
+	    		this.loadAppointments();
 	    	}, (error) => {
 	    		console.log(error);
 	  		});	
     	},
-    	loadAppoinments: function() {
-    		if(!this.appointments) {
-    			return;
+    	loadAppointments: function() {
+    		if(!this.appointments.length) {
+              this.resetTime();
+    		  return;
     		}
     		
     		let self = this;
@@ -80,26 +89,22 @@
     				if(appointment.time == timeslot.time) {
 						self.timeslots[index].disable = true;
     					return true;
-    				}else {
-    					self.timeslots[index].disable = false;
     				}
-
-
 				}); //it will throw all of the results(the similar timeslots and appointment.time) into result
     		});
     	},
     	chosenTime: function(index) {
-    		this.timeslots[index].disable = true;
-    		this.picked.push([this.timeslots[index].time]);
-    		console.log(this.picked);
-
-    	},
-    	send: function() {
-    		axios.get(`/branch/${this.branch.id}/services/${this.service.id}/staffs/${this.staff.id}/appointments/details?time=${this.picked}&date=${this.date}`)
-    		.then(({ data }) => {
-    			window.location.href = data;
-    		})
-    	}
+            this.picked = this.timeslots[index].time;
+            console.log(this.picked);
+            axios.get(`/services/${this.service.id}/staffs/${this.staff.id}/appointments/details?time=${this.picked}&date=${this.date}`)
+            .then(({ data }) => {
+                window.location.href = data;
+            }, (error) => {
+          window.location.href = error.response.data;
+        });
+        },
     }
-  }
+}
 </script>
+
+//find the index of the button and make the disable to false.

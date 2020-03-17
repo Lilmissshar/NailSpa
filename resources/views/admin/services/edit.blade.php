@@ -17,10 +17,10 @@
           <div class="col-md-10 col-sm-12 mx-auto">
             {!! Form::model($service, ['route' => ['admin.services.update', $service->id], 'method' => 'PUT', 'id' => 'FormValidation', 'enctype' => 'multipart/form-data']) !!}
               <div class="form-group has-label">
-                <label>Type
+                <label>Name
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('type', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('name', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Description
@@ -32,13 +32,7 @@
                 <label>Time Taken
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('time_taken', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
-              </div>
-              <div class="form-group has-label">
-                <label>Branch ID
-                  <label class="star">*</label>
-                </label>
-                {{ Form::text('branch_id', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('duration', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Price

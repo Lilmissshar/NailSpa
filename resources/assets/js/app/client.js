@@ -8,6 +8,7 @@
 require('../bootstrap');
 require("bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js")
 require('../scripts/bootstrap-datetime-setup');
+window.moment = require('moment');
 
 window.Vue = require('vue');
 

@@ -9,51 +9,72 @@ use App\Services\TransformerService;
 class AppointmentServices extends TransformerService{
 
 	public function all(Request $request){
-		$sort = $request->sort ? $request->sort : 'created_at'; //last parameter is the default
+		$sort = $request->sort ? $request->sort : 'created_at'; 
 	    $order = $request->order ? $request->order : 'desc';
 	    $limit = $request->limit ? $request->limit : 10;
 	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search : '';
 
-	    $appointment = Appointment::where('date', 'like', "%{$query}%")->orderBy($sort, $order);
-	    $listCount = $appointment->count();
+	    $appointments = Appointment::where('date', 'like', "%{$query}%")->orderBy($sort, $order);
+	    $listCount = $appointments->count();
 
-	    $appointment = $appointment->limit($limit)->offset($offset)->get();
+	    $appointments = $appointments->limit($limit)->offset($offset)->get();
 
-	    return respond(['rows' => $appointment, 'total' => $listCount]);
+	    return respond(['rows' => $this->transformCollection($appointments), 'total' => $listCount]);
 	}
 
-	public function update(Request $request, Appointment $appointment) {
-    $data = $request->validate([
-      'time' => 'required',
-      'date' => 'required',
-      'staff_service_id' => 'required',
-      'branch_id' => 'required',
-      'user_id' => 'required',
-      'code' => 'required'
-    ]);
-    // dd($data['date']);
-    $appointment->date = $data['date']; 
-    $appointment->time = $data['time'];
-    $appointment->staff_service_id = $data['staff_service_id'];
-    $appointment->branch_id = $data['branch_id'];
-    $appointment->user_id = $data['user_id'];
-    $appointment->code = $data['code'];
-    $appointment->save();
+	public function update(Request $request, Appointment $appointments) {
+	    $data = $request->validate([
+	      "status" => "required"
+	    ]);
+	    
+	    $appointments->status = $data['status'];
+	    $appointments->save();
 
-    return redirect()->route('admin.appointments.index'); 
-  }
+	    return redirect()->route('admin.appointments.index'); 
+	 }
 
+	public function status($appointment){
+		switch($appointment->status){
+			case "0":
+			return "Cancelled";
+			break;
 
+			case "1":
+			return "Ongoing";
+			break;
+
+			case "2":
+			return "Completed";
+			break;
+
+			case "3":
+			return "Accepted";
+			break;
+
+			case "4":
+			$appointment->service_staff->staff->name = null;
+			return "Rejected";
+			break;
+
+			case "5":
+			return "Pending";
+			break;
+			
+			default:
+			return "Pending";
+		}
+	}
 
 	public function transform($appointment){
 		return [
+			'id' => $appointment->id,
 			'time' => $appointment->time,
-			'date' => $appoinment->date,
-			'staff_service_id' => $appointment->staff_service_id,
-			'branch_id' => $appointment->branch_id,
-			'user_id' => $appointment->user_id,
-			'code' =>$appointment->code
+			'date' => $appointment->date,
+			'duration' => $appointment->duration,
+			'status' =>$this->status($appointment),
+			'customer_id' => $appointment->customer->name,
+			'staff_name' => $appointment->service_staff->staff->name
 		];
 	}
 }

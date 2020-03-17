@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Client;
 
 use App\Staff;
-use App\Branch;
 use App\Service;
 use App\Appointment;
 use App\Customer;
@@ -20,9 +19,8 @@ class DetailsController extends Controller{
     $this->detailServices = $detailServices;
   }
 	
-  public function index(Request $request, Branch $branch, Service $service, Staff $staff){ 
+  public function index(Request $request, Service $service, Staff $staff){ 
     $data = [
-      'branch' => $branch, 
       'service' => $service, 
       'staff' => $staff, 
       'time' => $request->time, 
@@ -36,13 +34,12 @@ class DetailsController extends Controller{
     return view($this->path . 'index', $data);
   }
 
-  public function submitForm(Request $request, Branch $branch, Service $service, Staff $staff){
-    return $this->detailServices->store($request, $branch, $service, $staff);
+  public function submitForm(Request $request, Service $service, Staff $staff){
+    return $this->detailServices->store($request, $service, $staff);
   }
 
-  public function signIn(Request $request, Branch $branch, Service $service, Staff $staff ){
+  public function signIn(Request $request, Service $service, Staff $staff){
     $data = [
-      'branch' => $branch,
       'service' => $service,
       'staff' => $staff,
       'time' => $request->time,
@@ -55,22 +52,7 @@ class DetailsController extends Controller{
     return view($this->path . 'show', $data);
   }
 
-  public function submitSignIn(Request $request, Branch $branch, Service $service, Staff $staff){
-    return $this->detailServices->storeSignIn($request, $branch, $service, $staff);
+  public function submitSignIn(Request $request, Service $service, Staff $staff){
+    return $this->detailServices->storeSignIn($request, $service, $staff);
   }
-
-  // public function showDetails(Request $request, Branch $branch, Service $service, Staff $staff){
-  //   $data = [
-  //     'branch' => $branch,
-  //     'service' => $service,
-  //     'staff' => $staff, 
-  //     'time' => $request->time,
-  //     'date' => $request->date
-  //   ];
-  //   if ($request->wantsJson()) {
-  //     return route('details.signIn', $data);
-  //   }
-
-  //   return view($this->path . 'customerDetail', $data);
-  // }
 }

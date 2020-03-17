@@ -14,9 +14,11 @@ class AdminAuth{
    * @return mixed
    */
   public function handle($request, Closure $next, $guard = null){
+
 		if (Auth::guard($guard)->check()) {
 			return $next($request);
 		}
+    
 		return redirect()->route('admin.login.show');
 
   }

@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     protected $fillable = [
-      'user_id',
-      'review'
+      'appointment_id',
+      'description'
   ];
 
-  public function user() {
-  	return $this->belongsTo('App\User');
+  public function appointment() {
+  	return $this->belongsTo('App\Appointment');
   }
 }

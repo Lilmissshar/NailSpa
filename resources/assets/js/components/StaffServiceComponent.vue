@@ -6,11 +6,11 @@
 
 			<div class="row" v-for="(service, index) in services">
 		      <div class="col-10 pl-3">
-		        <input type="text" class="form-control px-4" name="services" id="services" v-on:keyup="viewService(index)" v-model="service.type" autocomplete="off" required>
+		        <input type="text" class="form-control px-4" name="services" id="services" v-on:keyup="viewService(index)" v-model="service.name" autocomplete="off" required>
 		        <input type="hidden" name="service_id[]" v-model="service.id">
 		        <ul v-if="service.showList" class="team-search-display pl-0">
 		          <li v-for="list in lists" v-on:click="serviceOption(list, index)" class="border-bottom-gray px-2 mt-2 text-left">
-		            {{ list.type }}
+		            {{ list.name }}
 		          </li>
 		        </ul>
 		      </div>
@@ -30,7 +30,7 @@
 			return {
 				services: [{
 					"id": null,
-					"type": null,
+					"name": null,
 					"showList": false
 				}],
 				lists: [],
@@ -49,7 +49,7 @@
 				console.log("addService")
 				this.services.push({
 					"id": null,
-					"type": null,
+					"name": null,
 					"showList": false
 				})
 			},
@@ -68,7 +68,7 @@
 			serviceOption: function(list, index) {
 				console.log("ServiceOption")
 				this.services[index].id = list.id;
-				this.services[index].type = list.type;
+				this.services[index].name = list.name;
 				this.clickedData.push(list.id);
 				this.services[index].showList = false;	
 			}//pass in the service as a prop, then check the default function if u have the prop have any value. if not then create, otherwise its edit

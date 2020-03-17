@@ -23,5 +23,5 @@
       @include('layouts.partials.admin.footer')
       <!-- End Footer -->
     </div>
-  </div>
+  </div> 
 @endsection

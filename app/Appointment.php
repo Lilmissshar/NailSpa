@@ -7,28 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     protected $fillable = [
-      'time', 
+      'service_staff_id',
+      'customer_id',
+      'duration',
+      'status',
       'date',
-      'code',
-      'staff_service_id',
-      'branch_id',
-      'user_id'
+      'time'
   ];
 
-  public function branch() {
-  	return $this->belongsTo('App\Branch');
+  public function service_staff() {
+    return $this->belongsTo('App\ServiceStaff');
   }
 
-  public function user() {
-  	return $this->belongsTo('App\User');
+  public function customer() {
+    return $this->belongsTo('App\Customer');
   }
 
-  public function staff_service() {
-  	return $this->belongsTo('App\StaffService');
-  }
-
-  public function payment() {
-    return $this->hasOne('App\Payment');
+  public function review() {
+    return $this->hasOne('App\Review');
   }
 
 }

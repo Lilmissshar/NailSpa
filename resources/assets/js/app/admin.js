@@ -52,8 +52,6 @@ require('../scripts/bootstrap-datetime-setup');
 
 require('../scripts/live-file-review');
 
-
-
 // Vue Setup
 window.Vue = require('vue');
 

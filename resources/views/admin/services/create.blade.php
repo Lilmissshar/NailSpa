@@ -13,10 +13,10 @@
       <div class="card-body">
         {!! Form::open(['route' => 'admin.services.store', 'class' => 'form', 'id' => 'form-validation']) !!}
         <div class="form-group has-label">
-          <label>Type
+          <label>Name
             <star class="star">*</star>
           </label>
-          {{ Form::text('type', null, [ 'class'=>'form-control', 'required']) }}
+          {{ Form::text('name', null, [ 'class'=>'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>Description
@@ -25,16 +25,10 @@
           {{ Form::textarea('description', null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
-          <label>Time Taken
+          <label>Duration
             <star class="star">*</star>
           </label>
-          {{ Form::text('time_taken', null, ['class' => 'form-control', 'required']) }}
-        </div>
-        <div class="form-group has-label">
-          <label>Branch ID
-            <star class="star">*</star>
-          </label>
-          {{ Form::text('branch_id', null, ['class' => 'form-control', 'required']) }}
+          {{ Form::text('duration', null, ['class' => 'form-control', 'required']) }}
         </div>
         <div class="form-group has-label">
           <label>Price

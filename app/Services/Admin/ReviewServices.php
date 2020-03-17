@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Review;
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Services\TransformerService;
 
@@ -15,33 +16,23 @@ class ReviewServices extends TransformerService{
 	    $offset = $request->offset ? $request->offset : 0;
 	    $query = $request->search ? $request->search : '';
 
-	    $review = Review::where('user_id', 'like', "%{$query}%")->orderBy($sort, $order);
-	    $listCount = $review->count();
+	    $reviews = Review::where('appointment_id', 'like', "%{$query}%")->orderBy($sort, $order);
+	    $listCount = $reviews->count();
 
-	    $review = $review->limit($limit)->offset($offset)->get();
+	    $reviews = $reviews->limit($limit)->offset($offset)->get();
 
-	    return respond(['rows' => $review, 'total' => $listCount]);
+	    return respond(['rows' => $this->transformCollection($reviews), 'total' => $listCount]);
 	}
-
-	public function update(Request $request, Review $review) {
-    $data = $request->validate([
-      'user_id' => 'required',
-      'review' => 'required'
-    ]);
-
-    $review->user_id = $data['user_id']; //the variable museum is what the user wrote? 
-    $review->review = $data['review'];
-    $review->save();
-
-    return redirect()->route('admin.reviews.index'); 
-  }
-
-
 
 	public function transform($review){
 		return [
-			'user_id' => $review->user_id,
-			'review' => $review->review
+			'id' => $review->id,
+			'appointment_id' => $review->appointment_id,
+			'customer_name' => $review->appointment->customer->name,
+			'customer_email' => $review->appointment->customer->email,
+			'service' => $review->appointment->service_staff->service->name,
+			'staff' => $review->appointment->service_staff->staff->name,
+			'description' => $review->description
 		];
 	}
 }

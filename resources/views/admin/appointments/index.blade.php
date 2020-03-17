@@ -1,25 +1,17 @@
 @extends('layouts.admin.master')
 
-
 @section('content')
 	<div class="card bootstrap-table">
     <div class="card-body table-full-width">
-      <div class="toolbar">
-        <a href="{{ route('admin.appointments.create') }}" class="ml-1">
-          <button class="btn btn-outline" style="border-radius: 30px">
-            <i class="glyphicon fa fa-plus"></i>
-          </button>
-        </a>
-      </div>
       <table id="bootstrap-table" class="table" data-url="{{ route('admin.appointments.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
           <th data-field="time">Time</th>
           <th data-field="date">Date</th>
-          <th data-field="staff_service_id">Staff Service ID</th>
-          <th data-field="branch_id">Branch ID</th>
-          <th data-field="user_id">User ID</th>
-          <th data-field="code">Promo Code</th>
+          <th data-field="staff_name">Staff Name</th>
+          <th data-field="customer_id">Customer Name</th>
+          <th data-field="duration">Duration</th>
+          <th data-field="status">Status</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
       </table>

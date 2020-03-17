@@ -35,16 +35,10 @@
                 {{ Form::text('email', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="form-group has-label">
-                <label>Phone
+                <label>Mobile
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('phone', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
-              </div>
-              <div class="form-group has-label">
-                <label>Branch ID
-                  <label class="star">*</label>
-                </label>
-                {{ Form::text('branch_id', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('mobile', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Description

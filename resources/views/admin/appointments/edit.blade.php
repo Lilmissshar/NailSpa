@@ -19,37 +19,37 @@
                 <label>Time
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('time', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('time', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
                 <label>Date
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('date', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
-                <label>Staff Service ID
+                <label>Staff Name
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('staff_service_id', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::select('service_staff_id', $serviceStaff, null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="form-group has-label">
-                <label>Branch ID
+                <label>Customer ID
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('branch_id', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::select('customer_id', $customer, null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
-                <label>User ID
+                <label>Duration
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('user_id', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::text('duration', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true', 'disabled' => 'true']) }}
               </div>
               <div class="form-group has-label">
-                <label>Code
+                <label>Status
                   <label class="star">*</label>
                 </label>
-                {{ Form::text('code', null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
+                {{ Form::select('status', array('0' => 'Cancelled', '1' => 'Ongoing', '2' => 'Completed', '3' => 'Accepted', '4' => 'Rejected', '5' => 'Pending'), null, ['id' => 'form-validation', 'class' => 'form-control', 'required' => 'true']) }}
               </div>
               <div class="card-footer ml-auto mr-auto mt-3 text-right">
                 <button type="submit" class="btn btn-warning btn-wd">Save Edit</button>

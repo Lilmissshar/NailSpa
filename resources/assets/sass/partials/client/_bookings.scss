@@ -1,0 +1,19 @@
+.booking-content {
+	margin:60px 0;
+	#date-booking{
+		max-width: 300px;
+		input {
+			margin: 0px !important;
+		}
+	}
+	.submit-btn {
+		background-color: #00B7EB;
+		color: white;
+		border: none;
+		padding: 10px 50px;
+	}
+}
+
+.customer-details {
+	margin: 60px;
+}

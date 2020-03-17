@@ -14,10 +14,9 @@
       <table id="bootstrap-table" class="table" data-url="{{ route('admin.services.index') }}">
         <thead>
           <th data-field="id" class="text-center" data-sortable="true">ID</th>
-          <th data-field="type">Type</th>
+          <th data-field="name">Name</th>
           <th data-field="description">Description</th>
-          <th data-field="time_taken">Time Taken</th>
-          <th data-field="branch_id">Branch ID</th>
+          <th data-field="duration">Duration</th>
           <th data-field="price">Price</th>
           <th data-field="actions" class="td-actions text-right" data-events="operateEvents" data-formatter="operateFormatter">Actions</th>
         </thead>
